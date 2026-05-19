@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dorian Berger — Cybersécurité</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #00ff88;
+    --green-dim: #00cc6a;
+    --green-dark: #003322;
+    --green-glow: rgba(0,255,136,0.15);
+    --red: #ff3366;
+    --amber: #ffaa00;
+    --bg: #060a0e;
+    --bg2: #0b1117;
+    --bg3: #111820;
+    --border: rgba(0,255,136,0.15);
+    --border-hover: rgba(0,255,136,0.4);
+    --text: #c8d8e8;
+    --text-dim: #6a8a9a;
+    --mono: 'Share Tech Mono', monospace;
+    --title: 'Rajdhani', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    line-height: 1.6;
+    font-size: 15px;
+    overflow-x: hidden;
+  }
+
+  /* Scanline effect */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Grid bg */
+  .grid-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(6,10,14,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: var(--green);
+    letter-spacing: 2px;
+  }
+
+  .nav-logo span { color: var(--text-dim); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--green); }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 2rem 4rem;
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .hero-tag {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 1px;
+    background: var(--green);
+  }
+
+  h1.hero-name {
+    font-family: var(--title);
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+  }
+
+  h1.hero-name .accent { color: var(--green); }
+
+  .hero-role {
+    font-family: var(--mono);
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    color: var(--text-dim);
+    margin-bottom: 2rem;
+  }
+
+  .hero-role .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background: var(--green);
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .hero-desc {
+    max-width: 560px;
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.75rem 1.75rem;
+    background: var(--green);
+    color: #000;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: 700;
+    transition: background 0.2s, transform 0.1s;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+
+  .btn-primary:hover { background: #fff; transform: translateY(-1px); }
+
+  .btn-secondary {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 0.75rem 1.75rem;
+    background: transparent;
+    color: var(--green);
+    border: 1px solid var(--border-hover);
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .btn-secondary:hover { background: var(--green-glow); border-color: var(--green); }
+
+  .hero-stats {
+    margin-top: 4rem;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 3rem;
+    max-width: 500px;
+  }
+
+  .stat-val {
+    font-family: var(--title);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* SECTION TITLES */
+  .section-header {
+    margin-bottom: 3rem;
+  }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: var(--title);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.1;
+  }
+
+  .section-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--green);
+    margin-top: 1rem;
+  }
+
+  /* ABOUT */
+  #about {
+    padding: 7rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: var(--text);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+  }
+
+  .about-text p:last-child { margin-bottom: 0; }
+
+  .terminal-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    position: relative;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 2;
+  }
+
+  .terminal-card::before {
+    content: '● ● ●';
+    position: absolute;
+    top: 12px; left: 16px;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 4px;
+  }
+
+  .terminal-card .t-body { margin-top: 1.8rem; }
+  .t-prompt { color: var(--green); }
+  .t-key { color: var(--amber); }
+  .t-val { color: var(--text); }
+  .t-dim { color: var(--text-dim); }
+
+  /* SKILLS */
+  #skills {
+    padding: 7rem 0;
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    transition: border-color 0.25s, transform 0.2s;
+  }
+
+  .skill-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-3px);
+  }
+
+  .skill-cat {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .skill-list { list-style: none; }
+
+  .skill-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.4rem 0;
+  }
+
+  .skill-name {
+    font-size: 14px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .skill-name::before {
+    content: '▸';
+    color: var(--green);
+    font-size: 10px;
+  }
+
+  .skill-bar-wrap {
+    width: 80px;
+    height: 3px;
+    background: var(--bg);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .skill-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--green-dim));
+    border-radius: 2px;
+  }
+
+  /* EXPERIENCE */
+  #experience {
+    padding: 7rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .timeline {
+    position: relative;
+    padding-left: 2rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--green), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .timeline-item:last-child { margin-bottom: 0; }
+
+  .timeline-dot {
+    position: absolute;
+    left: -2rem;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    background: var(--green);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 10px var(--green);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  }
+
+  .exp-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .exp-title {
+    font-family: var(--title);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .exp-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    border: 1px solid var(--border-hover);
+    padding: 2px 10px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .exp-company {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--green-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .exp-desc {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .exp-tags {
+    margin-top: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* FORMATION */
+  #formation {
+    padding: 7rem 0;
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .chrono-wrap {
+    position: relative;
+    padding-top: 2rem;
+  }
+
+  /* horizontal line */
+  .chrono-axis {
+    position: relative;
+    height: 2px;
+    background: var(--border);
+    margin: 0 0 0 0;
+    overflow: visible;
+  }
+
+  .chrono-axis-fill {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), transparent);
+    width: 100%;
+  }
+
+  /* items row */
+  .chrono-items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 0;
+  }
+
+  .chrono-item {
+    position: relative;
+    padding: 1.75rem 1.5rem 1.5rem;
+    border-right: 1px solid var(--border);
+    transition: background 0.25s;
+  }
+
+  .chrono-item:last-child { border-right: none; }
+  .chrono-item:hover { background: rgba(0,255,136,0.03); }
+
+  /* dot on the axis */
+  .chrono-dot {
+    position: absolute;
+    top: -6px; left: 1.5rem;
+    width: 10px; height: 10px;
+    background: var(--bg2);
+    border: 2px solid var(--green);
+    box-shadow: 0 0 8px var(--green);
+    transform: rotate(45deg);
+  }
+
+  .chrono-item.active .chrono-dot {
+    background: var(--green);
+  }
+
+  /* vertical connector from dot to card */
+  .chrono-item::before {
+    content: '';
+    position: absolute;
+    top: 4px; left: calc(1.5rem + 4px);
+    width: 1px;
+    height: 1.5rem;
+    background: var(--border);
+  }
+
+  .chrono-period {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--green);
+    letter-spacing: 2px;
+    margin-bottom: 1.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .chrono-type {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .chrono-degree {
+    font-family: var(--title);
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    margin-bottom: 0.3rem;
+  }
+
+  .chrono-school {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--green-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .chrono-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .chrono-badge {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--green);
+    border: 1px solid var(--border-hover);
+    padding: 2px 8px;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 768px) {
+    .chrono-items { grid-template-columns: 1fr 1fr; }
+    .chrono-item { border-bottom: 1px solid var(--border); }
+  }
+
+  /* PROJECTS */
+  #projects {
+    padding: 7rem 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 1.75rem;
+    transition: border-color 0.25s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+  }
+
+  .project-card.featured {
+    border-color: rgba(0,255,136,0.3);
+    background: linear-gradient(135deg, var(--bg2), var(--green-dark));
+  }
+
+  .project-type {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .project-name {
+    font-family: var(--title);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .project-desc {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .project-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding-bottom: 1px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  .project-link:hover { border-color: var(--green); }
+
+  /* CONTACT */
+  #contact {
+    padding: 7rem 0;
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+    text-align: center;
+  }
+
+  #contact .section-divider { margin: 1rem auto; }
+
+  .contact-desc {
+    max-width: 500px;
+    margin: 1.5rem auto 2.5rem;
+    color: var(--text-dim);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+  }
+
+  .contact-link {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .contact-link::before {
+    content: '//';
+    color: var(--green);
+  }
+
+  .contact-link:hover { color: var(--green); }
+
+  /* FOOTER */
+  footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+  }
+
+  .footer-status {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 4px var(--green); }
+    50% { opacity: 0.4; box-shadow: none; }
+  }
+
+  /* ANIMATIONS */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up:nth-child(1) { animation-delay: 0.1s; }
+  .fade-up:nth-child(2) { animation-delay: 0.25s; }
+  .fade-up:nth-child(3) { animation-delay: 0.4s; }
+  .fade-up:nth-child(4) { animation-delay: 0.55s; }
+
+  @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: repeat(3, auto); gap: 1.5rem; }
+    nav { padding: 1rem; }
+    .nav-links { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>// </span>dorian.berger<span>.sec</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">Profil</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Expérience</a></li>
+    <li><a href="#formation">Formation</a></li>
+    <li><a href="#projects">Projets</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-tag fade-up">Cybersécurité &amp; Ethical Hacking</div>
+    <h1 class="hero-name fade-up">Dorian<br><span class="accent">Berger</span></h1>
+    <p class="hero-role fade-up">
+      <span id="typed-text">Étudiant en Cybersécurité</span><span class="cursor"></span>
+    </p>
+    <p class="hero-desc fade-up">
+      Passionné par la cybersécurité, je souhaite développer mes compétences en sécurité des infrastructures, analyse des vulnérabilités et gestion des incidents. En recherche d'alternance pour 2027-2029 en tant qu'étudiant chez Télécom Nancy.
+    </p>
+    <div class="hero-ctas fade-up">
+      <a href="#contact" class="btn-primary">Me contacter</a>
+      <a href="#projects" class="btn-secondary">Voir mes projets</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-val">1er</div>
+        <div class="stat-label">/ 117 en L2</div>
+      </div>
+      <div>
+        <div class="stat-val">3</div>
+        <div class="stat-label">Projets académiques</div>
+      </div>
+      <div>
+        <div class="stat-val">32</div>
+        <div class="stat-label">CTF Résolus</div>
+      </div>
+      <div>
+        <div class="stat-val">400</div>
+        <div class="stat-label">Points RootMe</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-header">
+          <div class="section-tag">// 01. Profil</div>
+          <h2 class="section-title">Qui<br>suis-je ?</h2>
+          <div class="section-divider"></div>
+        </div>
+        <p>
+          Étudiant en L2 Informatique à la Faculté des Sciences de Vandœuvre-lès-Nancy, classé <strong>1er sur 117</strong>, passionné par la cybersécurité depuis mes premières expériences en stage chez POST Telecom Luxembourg.
+        </p>
+        <p>
+          Mon parcours en classe préparatoire MP2I-MPI m'a forgé une rigueur analytique que j'applique aujourd'hui à la sécurité des infrastructures, l'analyse des vulnérabilités et la gestion des incidents.
+        </p>
+        <p>
+          Disponible pour des stages, alternances ou missions freelance en cybersécurité.
+        </p>
+      </div>
+      <div class="terminal-card">
+        <div class="t-body">
+          <div><span class="t-prompt">$ </span><span class="t-key">whoami</span></div>
+          <div class="t-val">dorian.berger — cyber student</div>
+          <br>
+          <div><span class="t-prompt">$ </span><span class="t-key">cat</span> <span class="t-dim">infos.json</span></div>
+          <div class="t-dim">{</div>
+          <div>&nbsp;&nbsp;<span class="t-key">"localisation"</span>: <span class="t-val">"Nancy, France"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="t-key">"statut"</span>: <span style="color:var(--green)">"recherche alternance"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="t-key">"langues"</span>: <span class="t-val">["FR", "EN (B2)", "ES (B1)"]</span>,</div>
+          <div>&nbsp;&nbsp;<span class="t-key">"permis"</span>: <span class="t-val">"B"</span></div>
+          <div class="t-dim">}</div>
+          <br>
+          <div><span class="t-prompt">$ </span><span class="t-dim">_</span><span style="animation:blink 1s step-end infinite;display:inline-block;width:8px;height:14px;background:var(--green);vertical-align:middle;"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">// 02. Compétences</div>
+      <h2 class="section-title">Arsenal<br>Technique</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-cat">⬡ Cybersécurité</div>
+        <ul class="skill-list">
+          <li class="skill-item">
+            <span class="skill-name">Pentest (participation)</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:45%"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Wireshark</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Firewall / SOC</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:40%"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">RootMe</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:35%"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Virtual Box / VMs</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:55%"></div></div>
+          </li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">⬡ Programmation</div>
+        <ul class="skill-list">
+          <li class="skill-item">
+            <span class="skill-name">Bash</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Java (POO)</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Langage C</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">PowerShell</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:50%"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Netlogo (POA)</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div>
+          </li>
+        </ul>
+      </div>
+      <div class="skill-card">
+        <div class="skill-cat">⬡ Soft Skills &amp; Autres</div>
+        <ul class="skill-list">
+          <li class="skill-item">
+            <span class="skill-name">Rigueur</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Esprit d'analyse</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Autonomie</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Adaptabilité</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
+          </li>
+          <li class="skill-item">
+            <span class="skill-name">Curiosité</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">// 03. Expérience</div>
+      <h2 class="section-title">Parcours<br>Professionnel</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="exp-header">
+          <div class="exp-title">Stagiaire — Département Cybersécurité</div>
+          <div class="exp-badge">Juillet 2021 — 2 semaines</div>
+        </div>
+        <div class="exp-company">POST Telecom Luxembourg</div>
+        <p class="exp-desc"> Stage en deux phases (1 semaine + 2 semaines) au sein du département cybersécurité. Prise en main de PowerShell pour l'automatisation de tâches répétitives et complexes. Participation à un pentest, installation d'un firewall de remplacement chez le client, et découverte des outils de surveillance (Darktrace, SOC).</p>
+        <div class="exp-tags">
+          <span class="tag">Incident Management</span>
+          <span class="tag">Pentest</span>
+          <span class="tag">Firewall</span>
+          <span class="tag">Darktrace</span>
+          <span class="tag">SOC</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="exp-header">
+          <div class="exp-title">Stagiaire — Programme de rotation des départements IT</div>
+          <div class="exp-badge">Janvier 2020 — 1 semaine</div>
+        </div>
+        <div class="exp-company">POST Telecom Luxembourg</div>
+        <p class="exp-desc">Stage en deux phases (1 semaine + 2 semaines) au sein du département cybersécurité. Prise en main de PowerShell pour l'automatisation de tâches répétitives et complexes. Participation à un pentest, installation d'un firewall de remplacement chez le client, et découverte des outils de surveillance (Darktrace, SOC).</p>
+        <div class="exp-tags">
+          <span class="tag">PowerShell</span>
+          <span class="tag">BlueTeam</span>
+          <span class="tag">Projet Management</span>
+          <span class="tag">SOC</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="exp-header">
+          <div class="exp-title">Compétiteur E-Sport &amp; Créateur de contenu</div>
+          <div class="exp-badge">2019–2021</div>
+        </div>
+        <div class="exp-company">Indépendant</div>
+        <p class="exp-desc">Participation à des compétitions e-sport rémunérées avec gains cumulés d'environ $1 500. Création et gestion d'une chaîne YouTube avec production de contenu régulier : montage vidéo et streaming en direct.</p>
+        <div class="exp-tags">
+          <span class="tag">OBS Studio</span>
+          <span class="tag">Montage vidéo</span>
+          <span class="tag">Streaming</span>
+          <span class="tag">Gestion de projet</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATION -->
+<section id="formation">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">// 04. Formation</div>
+      <h2 class="section-title">Parcours<br>Académique</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="chrono-wrap">
+      <div class="chrono-axis">
+        <div class="chrono-axis-fill"></div>
+      </div>
+      <div class="chrono-items">
+        <div class="chrono-item">
+          <div class="chrono-dot"></div>
+          <div class="chrono-period">2021 — 2023</div>
+          <div class="chrono-type">Diplôme</div>
+          <div class="chrono-degree">Baccalauréat Général</div>
+          <div class="chrono-school">Lycée privé Saint-Léon IX — Nancy</div>
+          <p class="chrono-desc">Spécialités Mathématiques et NSI. Option Mathématiques Expertes.</p>
+          <span class="chrono-badge">Mention TB</span>
+        </div>
+        <div class="chrono-item">
+          <div class="chrono-dot"></div>
+          <div class="chrono-period">2023 — 2025</div>
+          <div class="chrono-type">Classe préparatoire</div>
+          <div class="chrono-degree">MP2I — MPI</div>
+          <div class="chrono-school">Lycée Henri Poincaré — Nancy</div>
+          <p class="chrono-desc">Formation d'excellence en Mathématiques, Physique, Informatique et Ingénierie.</p>
+        </div>
+        <div class="chrono-item active">
+          <div class="chrono-dot"></div>
+          <div class="chrono-period">2025 — 2026 ◈ En cours</div>
+          <div class="chrono-type">Licence</div>
+          <div class="chrono-degree">L2 Informatique</div>
+          <div class="chrono-school">Faculté des Sciences — Vandœuvre-lès-Nancy</div>
+          <p class="chrono-desc">Classé 1er sur 117 étudiants.</p>
+          <span class="chrono-badge">1er / 117</span>
+        </div>
+        <div class="chrono-item">
+          <div class="chrono-dot"></div>
+          <div class="chrono-period">2026 — 2027 ◈ Rentrée prochaine</div>
+          <div class="chrono-type">école d'ingénieur</div>
+          <div class="chrono-degree">Télécom Nancy</div>
+          <div class="chrono-school">FISEA (cybersécurité) — Vandœuvre-lès-Nancy</div>
+          <p class="chrono-desc">Sous statut étudiant la première année et en apprentissage la 2ème et 3ème année.</p>
+          <span class="chrono-badge">Prochainement</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">// 05. Projets</div>
+      <h2 class="section-title">Réalisations<br>Notables</h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card featured">
+        <div class="project-type">★ Projet académique</div>
+        <div class="project-name">Simulation d'un match de Volley</div>
+        <p class="project-desc">Modélisation et simulation d'un match de volley-ball complet en programmation orientée agents avec Netlogo. Gestion des comportements autonomes des joueurs, des règles du jeu et des interactions en temps réel.</p>
+        <div class="exp-tags" style="margin-bottom:1rem;">
+          <span class="tag">Netlogo</span>
+          <span class="tag">Prog. orientée agents</span>
+          <span class="tag">Modélisation</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-type">Projet académique</div>
+        <div class="project-name">Lost Cities — Jeu de société</div>
+        <p class="project-desc">Développement complet du jeu de société Lost Cities en Java, avec application des principes de programmation orientée objet : encapsulation, héritage, polymorphisme et gestion des états de jeu.</p>
+        <div class="exp-tags" style="margin-bottom:1rem;">
+          <span class="tag">Java</span>
+          <span class="tag">POO</span>
+          <span class="tag">Game Design</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link">→ GitHub</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-type">Projet académique</div>
+        <div class="project-name">Comparaison de Structures de Données</div>
+        <p class="project-desc">Étude comparative des performances de différentes structures de données (listes, arbres, tables de hachage) implémentées en langage C. Benchmarks et analyse de complexité algorithmique.</p>
+        <div class="exp-tags" style="margin-bottom:1rem;">
+          <span class="tag">Langage C</span>
+          <span class="tag">Algorithmique</span>
+          <span class="tag">Analyse de performance</span>
+        </div>
+        <div class="project-links">
+          <a href="#" class="project-link">→ GitHub</a>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-type">Expérience perso</div>
+        <div class="project-name">Chaîne YouTube &amp; E-Sport</div>
+        <p class="project-desc">Création et gestion d'une chaîne YouTube gaming avec production régulière de contenu. Participation à des tournois e-sport rémunérés (~$1 500 de gains). Maîtrise du streaming live et du montage vidéo.</p>
+        <div class="exp-tags" style="margin-bottom:1rem;">
+          <span class="tag">OBS Studio</span>
+          <span class="tag">Montage vidéo</span>
+          <span class="tag">Streaming</span>
+          <span class="tag">Communication</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-type">Projet perso</div>
+        <div class="project-name">Lab Cybersécurité — Réalisation d'un SOC </div>
+        <p class="project-desc">Déploiement d’un environnement SOC composé de Wazuh, Windows 11 et Kali Linux. Intégration des logs Sysmon dans Wazuh afin de centraliser et analyser les événements de sécurité. Simulation d’activités offensives depuis Kali Linux avec des outils comme Nmap et enum4linux. Analyse des alertes générées dans Wazuh et découverte des techniques MITRE ATT&CK liées aux connexions SMB et authentifications NTLM.</p>
+        <div class="exp-tags" style="margin-bottom:1rem;">
+          <span class="tag">Virtual Box</span>
+          <span class="tag">Wazuh SIEM</span>
+          <span class="tag">Sysmon</span>
+          <span class="tag">Log Analysis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-tag" style="justify-content:center;display:flex;">// 06. Contact</div>
+    <h2 class="section-title" style="font-size:clamp(2rem,5vw,3.5rem);">Travaillons<br>Ensemble</h2>
+    <div class="section-divider"></div>
+    <p class="contact-desc">
+      En recherche d'une alternance en cybersécurité — disponible pour discuter d'une opportunité dans ce domaine.
+    </p>
+    <a href="mailto:dorianberger54@gmail.com" class="btn-primary" style="display:inline-block;">dorianberger54@gmail.com</a>
+    <div class="contact-links">
+      <a href="tel:0764857741" class="contact-link">+33 7 64 85 77 41</a>
+      <a href="https://www.linkedin.com/in/dorian-berger54/" class="contact-link">LinkedIn</a>
+      <a href="#" class="contact-link">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2025 Dorian Berger — Nancy, France</div>
+  <div class="footer-status">
+    <div class="status-dot"></div>
+    En recherche d'alternance
+  </div>
+</footer>
+
+<script>
+  const roles = ["Étudiant en Cybersécurité", "En recherche d'alternance", "Pentest & Sécurité des SI", "Futur Cyber Analyst"];
+  let ri = 0, ci = 0, del = false;
+  const el = document.getElementById("typed-text");
+
+  function typeLoop() {
+    const txt = roles[ri];
+    if (!del) {
+      ci++;
+      el.textContent = txt.slice(0, ci);
+      if (ci === txt.length) { del = true; setTimeout(typeLoop, 2000); return; }
+    } else {
+      ci--;
+      el.textContent = txt.slice(0, ci);
+      if (ci === 0) { del = false; ri = (ri + 1) % roles.length; setTimeout(typeLoop, 300); return; }
+    }
+    setTimeout(typeLoop, del ? 50 : 80);
+  }
+  typeLoop();
+</script>
+</body>
+</html>
