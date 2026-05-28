@@ -985,7 +985,7 @@
       <div class="about-text">
         <div class="section-header">
           <div class="section-tag">// 01. Profil</div>
-          <h2 class="section-title">Qui<br>suis-je ?</h2>
+          <h2 class="section-title">Qui suis-je ?</h2>
           <div class="section-divider"></div>
         </div>
         <p>
@@ -1023,7 +1023,7 @@
   <div class="container">
     <div class="section-header">
       <div class="section-tag">// 02. Compétences</div>
-      <h2 class="section-title">Arsenal<br>Technique</h2>
+      <h2 class="section-title">Arsenal Technique</h2>
       <div class="section-divider"></div>
     </div>
     <div class="skills-grid">
@@ -1111,7 +1111,7 @@
   <div class="container">
     <div class="section-header">
       <div class="section-tag">// 03. Expérience</div>
-      <h2 class="section-title">Parcours<br>Professionnel</h2>
+      <h2 class="section-title">Parcours Professionnel</h2>
       <div class="section-divider"></div>
     </div>
     <div class="timeline">
@@ -1171,7 +1171,7 @@
   <div class="container">
     <div class="section-header">
       <div class="section-tag">// 04. Formation</div>
-      <h2 class="section-title">Parcours<br>Académique</h2>
+      <h2 class="section-title">Parcours Académique</h2>
       <div class="section-divider"></div>
     </div>
     <div class="chrono-wrap">
@@ -1224,7 +1224,7 @@
   <div class="container">
     <div class="section-header">
       <div class="section-tag">// 05. Projets</div>
-      <h2 class="section-title">Réalisations<br>Notables</h2>
+      <h2 class="section-title">Réalisations Notables</h2>
       <div class="section-divider"></div>
     </div>
     <div class="projects-grid">
@@ -1294,7 +1294,7 @@
 <section id="contact">
   <div class="container">
     <div class="section-tag" style="justify-content:center;display:flex;">// 06. Contact</div>
-    <h2 class="section-title" style="font-size:clamp(2rem,5vw,3.5rem);">Travaillons<br>Ensemble</h2>
+    <h2 class="section-title" style="font-size:clamp(2rem,5vw,3.5rem);">Travaillons Ensemble</h2>
     <div class="section-divider"></div>
     <p class="contact-desc">
       En recherche d'une alternance en cybersécurité — disponible pour discuter d'une opportunité dans ce domaine.
@@ -1445,22 +1445,37 @@
 
   // ── DECIPHER EFFECT ON SCROLL ─────────────────────────────────
   (function() {
-    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&!?<>';
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&!?';
+
+    function decipherNode(textNode, delay) {
+      const original = textNode.nodeValue;
+      if (!original || !original.trim()) return;
+      let iter = 0;
+      const maxIter = original.length * 3;
+      setTimeout(() => {
+        const iv = setInterval(() => {
+          textNode.nodeValue = original.split('').map((ch, i) => {
+            if (ch === ' ' || ch === '\n' || ch === '\r') return ch;
+            if (i < Math.floor(iter / 3)) return ch;
+            return charset[Math.floor(Math.random() * charset.length)];
+          }).join('');
+          iter++;
+          if (iter > maxIter) { textNode.nodeValue = original; clearInterval(iv); }
+        }, 30);
+      }, delay);
+    }
+
     function decipher(el) {
       if (el.dataset.deciphered) return;
       el.dataset.deciphered = '1';
-      const original = el.textContent;
-      let iter = 0;
-      const maxIter = original.length * 3;
-      const iv = setInterval(() => {
-        el.textContent = original.split('').map((ch, i) => {
-          if (ch === ' ' || ch === '\n') return ch;
-          if (i < iter / 3) return ch;
-          return charset[Math.floor(Math.random() * charset.length)];
-        }).join('');
-        iter++;
-        if (iter > maxIter) { el.textContent = original; clearInterval(iv); }
-      }, 30);
+      // Walk only text nodes, skip element nodes (preserves <br> etc.)
+      let d = 0;
+      el.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          decipherNode(node, d);
+          d += 120;
+        }
+      });
     }
 
     const targets = document.querySelectorAll('.section-title');
