@@ -20,19 +20,19 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --green: #00ff88;
-    --green-dim: #00cc6a;
-    --green-dark: #003322;
-    --green-glow: rgba(0,255,136,0.15);
+    --green: #b94fff;
+    --green-dim: #9333cc;
+    --green-dark: #1a0033;
+    --green-glow: rgba(185,79,255,0.15);
     --red: #ff3366;
-    --amber: #ffaa00;
-    --bg: #060a0e;
-    --bg2: #0b1117;
-    --bg3: #111820;
-    --border: rgba(0,255,136,0.15);
-    --border-hover: rgba(0,255,136,0.4);
-    --text: #c8d8e8;
-    --text-dim: #6a8a9a;
+    --amber: #cc88ff;
+    --bg: #07030e;
+    --bg2: #0e0818;
+    --bg3: #150d22;
+    --border: rgba(185,79,255,0.15);
+    --border-hover: rgba(185,79,255,0.45);
+    --text: #d0c0e8;
+    --text-dim: #7a6a9a;
     --mono: 'Share Tech Mono', monospace;
     --title: 'Rajdhani', sans-serif;
     --body: 'Inter', sans-serif;
@@ -64,8 +64,8 @@
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background-image:
-      linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+      linear-gradient(rgba(185,79,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(185,79,255,0.04) 1px, transparent 1px);
     background-size: 50px 50px;
     pointer-events: none;
     z-index: 0;
@@ -80,7 +80,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: rgba(6,10,14,0.85);
+    background: rgba(7,3,14,0.88);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
   }
@@ -559,7 +559,7 @@
   }
 
   .chrono-item:last-child { border-right: none; }
-  .chrono-item:hover { background: rgba(0,255,136,0.03); }
+  .chrono-item:hover { background: rgba(185,79,255,0.04); }
 
   /* dot on the axis */
   .chrono-dot {
@@ -671,7 +671,7 @@
   }
 
   .project-card.featured {
-    border-color: rgba(0,255,136,0.3);
+    border-color: rgba(185,79,255,0.35);
     background: linear-gradient(135deg, var(--bg2), var(--green-dark));
   }
 
@@ -831,10 +831,107 @@
 </head>
 <body>
 <div class="grid-bg"></div>
+<canvas id="matrix-canvas"></canvas>
+
+<style>
+  #matrix-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.13;
+  }
+
+  .glitch { position: relative; }
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    font-family: inherit; font-size: inherit;
+    font-weight: inherit; color: inherit;
+    text-transform: inherit; letter-spacing: inherit; line-height: inherit;
+  }
+  .glitch::before {
+    color: #ff00ff;
+    animation: glitch-before 4s infinite;
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    opacity: 0;
+  }
+  .glitch::after {
+    color: #00eeff;
+    animation: glitch-after 4s infinite;
+    clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%);
+    opacity: 0;
+  }
+  @keyframes glitch-before {
+    0%,84%,100%{opacity:0;transform:none}
+    85%{opacity:.9;transform:translateX(-5px) skewX(-1deg)}
+    87%{opacity:0}
+    90%{opacity:.7;transform:translateX(4px)}
+    92%,99%{opacity:0}
+  }
+  @keyframes glitch-after {
+    0%,84%,100%{opacity:0;transform:none}
+    86%{opacity:.8;transform:translateX(5px) skewX(1deg)}
+    88%{opacity:0}
+    91%{opacity:.6;transform:translateX(-4px)}
+    93%,99%{opacity:0}
+  }
+
+  #scan-terminal {
+    position: fixed;
+    bottom: 1.5rem; right: 1.5rem;
+    width: 320px;
+    background: rgba(14,8,24,0.93);
+    border: 1px solid rgba(185,79,255,0.35);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    z-index: 50;
+    box-shadow: 0 0 30px rgba(185,79,255,0.12);
+  }
+  #scan-terminal .t-header {
+    padding: 6px 12px;
+    background: rgba(185,79,255,0.1);
+    border-bottom: 1px solid rgba(185,79,255,0.2);
+    display: flex; align-items: center; justify-content: space-between;
+    color: #b94fff; letter-spacing: 2px; font-size: 10px;
+  }
+  #scan-terminal .t-dots { color: rgba(185,79,255,0.35); letter-spacing: 4px; }
+  #scan-terminal .t-body {
+    padding: 10px 12px; height: 140px; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end; gap: 3px;
+  }
+  .scan-line { display: flex; gap: 8px; line-height: 1.5; }
+  .sl-time { color: rgba(185,79,255,0.45); flex-shrink:0; }
+  .sl-ok   { color: #b94fff; }
+  .sl-warn { color: #ff3366; }
+  .sl-info { color: #cc88ff; }
+  .sl-msg  { color: #7a6a9a; }
+  #scan-close {
+    cursor:pointer; opacity:.5; font-size:14px; color:#b94fff;
+    background:none; border:none; line-height:1; padding:0;
+  }
+  #scan-close:hover{opacity:1}
+  #scan-cursor {
+    display:inline-block; width:6px; height:11px;
+    background:#b94fff; vertical-align:middle;
+    animation:blink 1s step-end infinite; margin-left:2px;
+  }
+  #hex-stream {
+    font-family:'Share Tech Mono',monospace; font-size:10px;
+    color:rgba(185,79,255,0.3); letter-spacing:2px;
+    overflow:hidden; white-space:nowrap; max-width:180px;
+  }
+  @media(max-width:768px){#scan-terminal,#hex-stream{display:none}}
+</style>
 
 <!-- NAV -->
 <nav>
   <div class="nav-logo"><span>// </span>dorian.berger<span>.sec</span></div>
+  <div id="hex-stream">00 ff a3 b9 4f ff</div>
   <ul class="nav-links">
     <li><a href="#about">Profil</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -849,7 +946,7 @@
 <section id="hero">
   <div class="hero-inner">
     <div class="hero-tag fade-up">Cybersécurité &amp; Ethical Hacking</div>
-    <h1 class="hero-name fade-up">Dorian<br><span class="accent">Berger</span></h1>
+    <h1 class="hero-name fade-up glitch" data-text="Dorian">Dorian<br><span class="accent">Berger</span></h1>
     <p class="hero-role fade-up">
       <span id="typed-text">Étudiant en Cybersécurité</span><span class="cursor"></span>
     </p>
@@ -1220,6 +1317,18 @@
   </div>
 </footer>
 
+<!-- SCAN TERMINAL -->
+<div id="scan-terminal">
+  <div class="t-header">
+    <span class="t-dots">● ● ●</span>
+    <span>THREAT_MONITOR.SH</span>
+    <button id="scan-close" title="Fermer">✕</button>
+  </div>
+  <div class="t-body" id="scan-body">
+    <div class="scan-line"><span class="sl-time">00:00:00</span><span class="sl-info">[INIT]</span><span class="sl-msg">Démarrage du moniteur...</span></div>
+  </div>
+</div>
+
 <script>
   const roles = ["Étudiant en Cybersécurité", "En recherche d'alternance", "Pentest & Sécurité des SI", "Futur Cyber Analyst"];
   let ri = 0, ci = 0, del = false;
@@ -1239,6 +1348,153 @@
     setTimeout(typeLoop, del ? 50 : 80);
   }
   typeLoop();
+
+  // ── MATRIX RAIN ──────────────────────────────────────────────
+  (function() {
+    const canvas = document.getElementById('matrix-canvas');
+    const ctx = canvas.getContext('2d');
+    const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEF<>{}[]|\\/.,:;!?#@$%^&*()_+-=~`';
+    let cols, drops;
+
+    function init() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      cols = Math.floor(canvas.width / 18);
+      drops = Array(cols).fill(1);
+    }
+
+    function draw() {
+      ctx.fillStyle = 'rgba(7,3,14,0.08)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.font = '14px Share Tech Mono, monospace';
+      for (let i = 0; i < cols; i++) {
+        const ch = chars[Math.floor(Math.random() * chars.length)];
+        const x = i * 18;
+        const y = drops[i] * 18;
+        // gradient from bright head to dim tail
+        const brightness = Math.random();
+        ctx.fillStyle = brightness > 0.97
+          ? '#ffffff'
+          : brightness > 0.85
+          ? '#e0aaff'
+          : '#b94fff';
+        ctx.fillText(ch, x, y);
+        if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+
+    init();
+    window.addEventListener('resize', init);
+    setInterval(draw, 55);
+  })();
+
+  // ── LIVE SCAN TERMINAL ────────────────────────────────────────
+  (function() {
+    const body = document.getElementById('scan-body');
+    const closeBtn = document.getElementById('scan-close');
+    closeBtn.addEventListener('click', () => {
+      document.getElementById('scan-terminal').style.display = 'none';
+    });
+
+    const ips = () => `${r(10,223)}.${r(0,255)}.${r(0,255)}.${r(1,254)}`;
+    const ports = [22,23,80,443,445,3389,8080,8443,27017,6379];
+    const cves = ['CVE-2024-3094','CVE-2023-44487','CVE-2024-21762','CVE-2023-23397'];
+    function r(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
+    function ts(){const d=new Date();return[d.getHours(),d.getMinutes(),d.getSeconds()].map(x=>String(x).padStart(2,'0')).join(':');}
+
+    const events = [
+      ()=>({cls:'sl-ok',tag:'[SCAN]',msg:`Port ${ports[r(0,ports.length-1)]} ouvert sur ${ips()}`}),
+      ()=>({cls:'sl-warn',tag:'[ALERT]',msg:`Tentative de connexion SSH depuis ${ips()}`}),
+      ()=>({cls:'sl-info',tag:'[INFO]',msg:`Analyse réseau : ${r(1,255)} hôtes détectés`}),
+      ()=>({cls:'sl-warn',tag:'[VULN]',msg:`${cves[r(0,cves.length-1)]} détecté`}),
+      ()=>({cls:'sl-ok',tag:'[FW]',msg:`Règle DROP appliquée → ${ips()}`}),
+      ()=>({cls:'sl-info',tag:'[LOG]',msg:`${r(100,9999)} paquets analysés`}),
+      ()=>({cls:'sl-warn',tag:'[IDS]',msg:`Signature Nmap détectée depuis ${ips()}`}),
+      ()=>({cls:'sl-ok',tag:'[AUTH]',msg:`Connexion refusée — brute force bloqué`}),
+      ()=>({cls:'sl-info',tag:'[SIEM]',msg:`Corrélation d'événements en cours...`}),
+      ()=>({cls:'sl-warn',tag:'[MITM]',msg:`ARP spoofing suspect sur ${ips()}`}),
+    ];
+
+    function addLine() {
+      const ev = events[r(0,events.length-1)]();
+      const line = document.createElement('div');
+      line.className = 'scan-line';
+      line.innerHTML = `<span class="sl-time">${ts()}</span><span class="${ev.cls}">${ev.tag}</span><span class="sl-msg">${ev.msg}</span>`;
+      body.appendChild(line);
+      // Keep max 7 lines
+      while (body.children.length > 7) body.removeChild(body.firstChild);
+    }
+
+    setTimeout(() => {
+      addLine();
+      setInterval(addLine, r(1200, 2800));
+      setInterval(() => { if (body.lastElementChild) {} setInterval(addLine, r(800,2000)); }, 8000);
+    }, 1500);
+  })();
+
+  // ── HEX STREAM IN NAV ────────────────────────────────────────
+  (function() {
+    const el = document.getElementById('hex-stream');
+    if (!el) return;
+    function randHex() {
+      return Array.from({length:6}, () => Math.floor(Math.random()*256).toString(16).padStart(2,'0')).join(' ');
+    }
+    setInterval(() => { el.textContent = randHex(); }, 400);
+  })();
+
+  // ── DECIPHER EFFECT ON SCROLL ─────────────────────────────────
+  (function() {
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&!?<>';
+    function decipher(el) {
+      if (el.dataset.deciphered) return;
+      el.dataset.deciphered = '1';
+      const original = el.textContent;
+      let iter = 0;
+      const maxIter = original.length * 3;
+      const iv = setInterval(() => {
+        el.textContent = original.split('').map((ch, i) => {
+          if (ch === ' ' || ch === '\n') return ch;
+          if (i < iter / 3) return ch;
+          return charset[Math.floor(Math.random() * charset.length)];
+        }).join('');
+        iter++;
+        if (iter > maxIter) { el.textContent = original; clearInterval(iv); }
+      }, 30);
+    }
+
+    const targets = document.querySelectorAll('.section-title');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) decipher(e.target); });
+    }, { threshold: 0.3 });
+    targets.forEach(t => obs.observe(t));
+  })();
+
+  // ── CURSOR TRAIL ──────────────────────────────────────────────
+  (function() {
+    const trail = [];
+    const max = 8;
+    for (let i = 0; i < max; i++) {
+      const d = document.createElement('div');
+      d.style.cssText = `position:fixed;pointer-events:none;z-index:9998;width:${6-i*0.5}px;height:${6-i*0.5}px;border-radius:50%;background:rgba(185,79,255,${0.6 - i*0.07});transition:transform 0.05s;top:-20px;left:-20px;`;
+      document.body.appendChild(d);
+      trail.push({el:d, x:0, y:0});
+    }
+    let mx=0, my=0;
+    window.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+    function animTrail() {
+      let lx=mx, ly=my;
+      trail.forEach((t,i) => {
+        const delay = i * 0.35;
+        t.x += (lx - t.x) * (0.4 - i*0.04);
+        t.y += (ly - t.y) * (0.4 - i*0.04);
+        t.el.style.transform = `translate(${t.x - 3}px, ${t.y - 3}px)`;
+        lx = t.x; ly = t.y;
+      });
+      requestAnimationFrame(animTrail);
+    }
+    animTrail();
+  })();
 </script>
 </body>
 </html>
