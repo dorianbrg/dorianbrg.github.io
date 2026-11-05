@@ -243,9 +243,9 @@
   .hero-stats {
     margin-top: 4rem;
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(4, auto);
     gap: 3rem;
-    max-width: 500px;
+    max-width: 640px;
   }
 
   .stat-val {
@@ -823,7 +823,7 @@
 
   @media (max-width: 768px) {
     .about-grid { grid-template-columns: 1fr; }
-    .hero-stats { grid-template-columns: repeat(3, auto); gap: 1.5rem; }
+    .hero-stats { grid-template-columns: repeat(2, auto); gap: 1.5rem; }
     nav { padding: 1rem; }
     .nav-links { gap: 1rem; }
   }
@@ -948,10 +948,10 @@
     <div class="hero-tag fade-up">Cybersécurité &amp; Ethical Hacking</div>
     <h1 class="hero-name fade-up glitch" data-text="Dorian">Dorian<br><span class="accent">Berger</span></h1>
     <p class="hero-role fade-up">
-      <span id="typed-text">Étudiant en Cybersécurité</span><span class="cursor"></span>
+      <span id="typed-text">Élève ingénieur en Cybersécurité</span><span class="cursor"></span>
     </p>
     <p class="hero-desc fade-up">
-      Passionné par la cybersécurité, je souhaite développer mes compétences en sécurité des infrastructures, analyse des vulnérabilités et gestion des incidents. En recherche d'alternance pour 2027-2029 en tant qu'étudiant chez Télécom Nancy.
+      Passionné par la cybersécurité, je souhaite développer mes compétences en sécurité des infrastructures, analyse des vulnérabilités et gestion des incidents. Je suis activement en recherche de stage de 4 semaines pour la période du 26 juillet au 31 août 2027.
     </p>
     <div class="hero-ctas fade-up">
       <a href="#contact" class="btn-primary">Me contacter</a>
@@ -963,16 +963,16 @@
         <div class="stat-label">/ 117 en L2</div>
       </div>
       <div>
-        <div class="stat-val">3</div>
-        <div class="stat-label">Projets académiques</div>
+        <div class="stat-val">1000+</div>
+        <div class="stat-label">Points Root-Me</div>
       </div>
       <div>
-        <div class="stat-val">32</div>
+        <div class="stat-val">6</div>
+        <div class="stat-label">Projets réalisés</div>
+      </div>
+      <div>
+        <div class="stat-val">150+</div>
         <div class="stat-label">CTF Résolus</div>
-      </div>
-      <div>
-        <div class="stat-val">400</div>
-        <div class="stat-label">Points RootMe</div>
       </div>
     </div>
   </div>
@@ -989,13 +989,13 @@
           <div class="section-divider"></div>
         </div>
         <p>
-          Étudiant en L2 Informatique à la Faculté des Sciences de Vandœuvre-lès-Nancy, classé <strong>1er sur 117</strong>, passionné par la cybersécurité depuis mes premières expériences en stage chez POST Telecom Luxembourg.
+          Élève ingénieur en première année à <strong>TELECOM Nancy</strong>, filière FISEA spécialisée en cybersécurité, après une L2 Informatique terminée <strong>1er sur 117</strong>. Ma passion pour la cybersécurité est née lors de mes stages chez POST Telecom Luxembourg.
         </p>
         <p>
-          Mon parcours en classe préparatoire MP2I-MPI m'a forgé une rigueur analytique que j'applique aujourd'hui à la sécurité des infrastructures, l'analyse des vulnérabilités et la gestion des incidents.
+          Ma classe préparatoire MP2I-MPI m'a donné une rigueur analytique que j'applique aujourd'hui en cours à TELECOM Nancy (réseaux, attaques web, exploitation, élévation de privilèges, algorithmes, langages de programmation) et en pratique personnelle : Root-Me, CTF, TryHackMe et un lab SOC maison.
         </p>
         <p>
-          Disponible pour des stages, alternances ou missions freelance en cybersécurité.
+          Je recherche un <strong>stage d'un mois au Luxembourg</strong> (26 juillet – 31 août 2027), puis une <strong>alternance de 2027 à 2029</strong>.
         </p>
       </div>
       <div class="terminal-card">
@@ -1005,9 +1005,10 @@
           <br>
           <div><span class="t-prompt">$ </span><span class="t-key">cat</span> <span class="t-dim">infos.json</span></div>
           <div class="t-dim">{</div>
+          <div>&nbsp;&nbsp;<span class="t-key">"ecole"</span>: <span class="t-val">"TELECOM Nancy"</span>,</div>
           <div>&nbsp;&nbsp;<span class="t-key">"localisation"</span>: <span class="t-val">"Nancy, France"</span>,</div>
-          <div>&nbsp;&nbsp;<span class="t-key">"statut"</span>: <span style="color:var(--green)">"recherche alternance"</span>,</div>
-          <div>&nbsp;&nbsp;<span class="t-key">"langues"</span>: <span class="t-val">["FR", "EN (B2)", "ES (B1)"]</span>,</div>
+          <div>&nbsp;&nbsp;<span class="t-key">"statut"</span>: <span style="color:var(--green)">"recherche stage été 2027 + alternance"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="t-key">"langues"</span>: <span class="t-val">["FR", "EN (B2)", "ES (A2)"]</span>,</div>
           <div>&nbsp;&nbsp;<span class="t-key">"permis"</span>: <span class="t-val">"B"</span></div>
           <div class="t-dim">}</div>
           <br>
@@ -1035,26 +1036,30 @@
             <div class="skill-bar-wrap"><div class="skill-bar" style="width:55%"></div></div>
           </li>
           <li class="skill-item">
-            <span class="skill-name">Wireshark / Analyse réseau</span>
+            <span class="skill-name">Analyse réseau / Wireshark </span>
             <div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div>
           </li>
           <li class="skill-item">
-            <span class="skill-name">Firewall / SOC</span>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="width:40%"></div></div>
+            <span class="skill-name">Pentest web / Burp Suite</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div>
           </li>
           <li class="skill-item">
-            <span class="skill-name">RootMe</span>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="width:35%"></div></div>
+            <span class="skill-name">Linux</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div>
           </li>
           <li class="skill-item">
             <span class="skill-name">Virtual Box / VMs</span>
-            <div class="skill-bar-wrap"><div class="skill-bar" style="width:55%"></div></div>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div>
           </li>
         </ul>
       </div>
       <div class="skill-card">
         <div class="skill-cat">⬡ Programmation</div>
         <ul class="skill-list">
+          <li class="skill-item">
+            <span class="skill-name">Python</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div>
+          </li>
           <li class="skill-item">
             <span class="skill-name">Bash</span>
             <div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div>
@@ -1118,6 +1123,33 @@
       <div class="timeline-item">
         <div class="timeline-dot"></div>
         <div class="exp-header">
+          <div class="exp-title">Professeur particulier de mathématiques</div>
+          <div class="exp-badge">Depuis septembre 2025</div>
+        </div>
+        <div class="exp-company">Indépendant</div>
+        <p class="exp-desc">Cours de soutien et préparation au baccalauréat pour des élèves de Terminale, environ 4 h par semaine.</p>
+        <div class="exp-tags">
+          <span class="tag">Pédagogie</span>
+          <span class="tag">Communication</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="exp-header">
+          <div class="exp-title">Emplois saisonniers</div>
+          <div class="exp-badge">Etés 2025-2026</div>
+        </div>
+        <div class="exp-company">Manutentionnaire (GXO Logistics), gondolier (Grand Frais), primeur (E.Leclerc)</div>
+        <p class="exp-desc">Travail en équipe en temps limité, rigueur et respect des procédures.</p>
+        <div class="exp-tags">
+          <span class="tag">Travail en équipe</span>
+          <span class="tag">Organisation</span>
+          <span class="tag">Pression du timing</span>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="exp-header">
           <div class="exp-title">Stagiaire — Département Cybersécurité</div>
           <div class="exp-badge">Juillet 2021 — 2 semaines</div>
         </div>
@@ -1138,7 +1170,7 @@
           <div class="exp-badge">Janvier 2020 — 1 semaine</div>
         </div>
         <div class="exp-company">POST Telecom Luxembourg</div>
-        <p class="exp-desc">Prise en main de PowerShell pour l'automatisation de tâches répétitives et complexes. Découverte des services de cybersécurité (architecture réseau de l'entrerprise, SOC). Apprentissage des étapes clés d'une mission (migration).</p>
+        <p class="exp-desc">Prise en main de PowerShell pour l'automatisation de tâches répétitives et complexes. Découverte des services de cybersécurité (architecture réseau de l'entreprise, SOC). Apprentissage des étapes clés d'une mission (migration).</p>
         <div class="exp-tags">
           <span class="tag">PowerShell</span>
           <span class="tag">BlueTeam</span>
@@ -1196,23 +1228,23 @@
           <div class="chrono-school">Lycée Henri Poincaré — Nancy</div>
           <p class="chrono-desc">Formation d'excellence en Mathématiques, Physique, Informatique et Ingénierie.</p>
         </div>
-        <div class="chrono-item active">
+        <div class="chrono-item">
           <div class="chrono-dot"></div>
-          <div class="chrono-period">2025 — 2026 ◈ En cours</div>
+          <div class="chrono-period">2025 — 2026</div>
           <div class="chrono-type">Licence</div>
           <div class="chrono-degree">L2 Informatique</div>
           <div class="chrono-school">Faculté des Sciences — Vandœuvre-lès-Nancy</div>
           <p class="chrono-desc">Classé 1er sur 117 étudiants.</p>
           <span class="chrono-badge">1er / 117</span>
         </div>
-        <div class="chrono-item">
+        <div class="chrono-item active">
           <div class="chrono-dot"></div>
-          <div class="chrono-period">2026 — 2027 ◈ Rentrée prochaine</div>
-          <div class="chrono-type">école d'ingénieur</div>
-          <div class="chrono-degree">Télécom Nancy</div>
-          <div class="chrono-school">FISEA (cybersécurité) — Vandœuvre-lès-Nancy</div>
-          <p class="chrono-desc">Sous statut étudiant la première année et en apprentissage la 2ème et 3ème année.</p>
-          <span class="chrono-badge">Prochainement</span>
+          <div class="chrono-period">2026 — 2029 ◈ En cours</div>
+          <div class="chrono-type">École d'ingénieurs</div>
+          <div class="chrono-degree">TELECOM Nancy</div>
+          <div class="chrono-school">FISEA (cybersécurité) — Villers-lès-Nancy</div>
+          <p class="chrono-desc">Statut étudiant en 1re année, alternance en 2e et 3e année. Cours : réseaux, attaques web, exploitation, élévation de privilèges, programmation, algorithmie, projets.</p>
+          <span class="chrono-badge">En cours</span>
         </div>
       </div>
     </div>
@@ -1229,16 +1261,6 @@
     </div>
     <div class="projects-grid">
       <div class="project-card featured">
-        <div class="project-type">★ Projet académique</div>
-        <div class="project-name">Simulation d'un match de Volley</div>
-        <p class="project-desc">Modélisation et simulation d'un match de volley-ball complet en programmation orientée agents avec Netlogo. Gestion des comportements autonomes des joueurs, des règles du jeu et des interactions en temps réel.</p>
-        <div class="exp-tags" style="margin-bottom:1rem;">
-          <span class="tag">Netlogo</span>
-          <span class="tag">Prog. orientée agents</span>
-          <span class="tag">Modélisation</span>
-        </div>
-      </div>
-      <div class="project-card featured">
         <div class="project-type">★ Projet perso</div>
         <div class="project-name">Lab Cybersécurité — Réalisation d'un SOC </div>
         <p class="project-desc">Déploiement d’un environnement SOC composé de Wazuh, Windows 11 et Kali Linux. Intégration des logs Sysmon dans Wazuh afin de centraliser et analyser les événements de sécurité. Simulation d’activités offensives depuis Kali Linux avec des outils comme Nmap et enum4linux. Analyse des alertes générées dans Wazuh et découverte des techniques MITRE ATT&CK liées aux connexions SMB et authentifications NTLM.</p>
@@ -1247,6 +1269,37 @@
           <span class="tag">Wazuh SIEM</span>
           <span class="tag">Sysmon</span>
           <span class="tag">Log Analysis</span>
+        </div>
+      </div>
+      <div class="project-card featured">
+        <div class="project-type">★ Projet académique — TELECOM Nancy</div>
+        <div class="project-name">EternalBlue &amp; WannaCry (CVE-2017-0144)</div>
+        <p class="project-desc">Projet de hacking éthique en équipe de 5 sur la corruption mémoire : étude de la faille SMBv1 de Windows exploitée par EternalBlue, état de l'art, démonstration d'exploitation sur machine virtuelle et contre-mesures. Ma partie : analyse du ransomware WannaCry, de sa propagation jusqu'au chiffrement des fichiers.</p>
+        <div class="exp-tags" style="margin-bottom:1rem;">
+          <span class="tag">SMBv1</span>
+          <span class="tag">Corruption mémoire</span>
+          <span class="tag">Ransomware</span>
+          <span class="tag">Exploitation</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-type">Examen — TELECOM Nancy</div>
+        <div class="project-name">Pentest d'une application web</div>
+        <p class="project-desc">Test d'intrusion d'une application web vulnérable en temps limité, avec rédaction d'un rapport présentant les vulnérabilités trouvées et les correctifs recommandés.</p>
+        <div class="exp-tags" style="margin-bottom:1rem;">
+          <span class="tag">Pentest web</span>
+          <span class="tag">Burp Suite</span>
+          <span class="tag">Rapport d'audit</span>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-type">Projet académique</div>
+        <div class="project-name">Simulation d'un match de Volley</div>
+        <p class="project-desc">Modélisation et simulation d'un match de volley-ball complet en programmation orientée agents avec Netlogo. Gestion des comportements autonomes des joueurs, des règles du jeu et des interactions en temps réel.</p>
+        <div class="exp-tags" style="margin-bottom:1rem;">
+          <span class="tag">Netlogo</span>
+          <span class="tag">Prog. orientée agents</span>
+          <span class="tag">Modélisation</span>
         </div>
       </div>
       <div class="project-card">
@@ -1297,7 +1350,7 @@
     <h2 class="section-title" style="font-size:clamp(2rem,5vw,3.5rem);">Travaillons Ensemble</h2>
     <div class="section-divider"></div>
     <p class="contact-desc">
-      En recherche d'une alternance en cybersécurité — disponible pour discuter d'une opportunité dans ce domaine.
+      En recherche d'un stage d'un mois au Luxembourg (26 juillet – 31 août 2027) et d'une alternance en cybersécurité pour 2027-2029. Discutons-en !
     </p>
     <a href="mailto:dorianberger54@gmail.com" class="btn-primary" style="display:inline-block;">dorianberger54@gmail.com</a>
     <div class="contact-links">
@@ -1310,10 +1363,10 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-copy">© 2025 Dorian Berger — Nancy, France</div>
+  <div class="footer-copy">© 2026 Dorian Berger — Nancy, France</div>
   <div class="footer-status">
     <div class="status-dot"></div>
-    En recherche d'alternance
+    En recherche de stage &amp; d'alternance
   </div>
 </footer>
 
@@ -1330,7 +1383,7 @@
 </div>
 
 <script>
-  const roles = ["Étudiant en Cybersécurité", "En recherche d'alternance", "Pentest & Sécurité des SI", "Futur Cyber Analyst"];
+  const roles = ["Élève ingénieur en Cybersécurité", "Stage été 2027 — Luxembourg", "Pentest & Sécurité des SI", "Futur Cyber Analyst"];
   let ri = 0, ci = 0, del = false;
   const el = document.getElementById("typed-text");
 
@@ -1429,7 +1482,6 @@
     setTimeout(() => {
       addLine();
       setInterval(addLine, r(1200, 2800));
-      setInterval(() => { if (body.lastElementChild) {} setInterval(addLine, r(800,2000)); }, 8000);
     }, 1500);
   })();
 
