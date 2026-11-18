@@ -59,7 +59,7 @@
         </div>
         <div class="hero-stats fade-up d5">
           <div><div class="stat-val">1er</div><div class="stat-label">/ 117 en L2</div></div>
-          <div><div class="stat-val">1000+</div><div class="stat-label">Points Root-Me</div></div>
+          <div><div class="stat-val" id="rootme-points">1000+</div><div class="stat-label">Points Root-Me</div></div>
           <div><div class="stat-val" id="stat-projects">7</div><div class="stat-label">Projets</div></div>
           <div><div class="stat-val">150+</div><div class="stat-label">CTF résolus</div></div>
         </div>
@@ -154,6 +154,14 @@
 </footer>
 
 <script src="js/lostcities.js"></script>
+<script>
+  fetch("data/rootme.json", { cache: "no-store" })
+    .then(r => r.json())
+    .then(d => {
+      document.getElementById("rootme-points").textContent = d.points;
+    })
+    .catch(() => {});  // en cas d'erreur, on garde "1000+"
+</script>
 <script>
   // ══════════════════════════════════════════════════════════════
   //  DONNÉES PROJETS — modifier ici, les cartes ET le terminal suivent
